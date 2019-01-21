@@ -21,44 +21,14 @@ public class Generics {
     List<Integer> ints = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
     List<String>  strs = Arrays.asList("tout", "titi", "ototo", "jean", "tous", "taratata");
 
-    ints = filter(ints, i -> i % 2==0);
-    ints = map(ints, i -> i*2);
-    for (Integer i: ints) System.out.println(i);
-
-    strs = map(strs, i -> i.toUpperCase());
-    strs = filter(strs, i -> i.length() - i.replace("T", "").length() > 1);
-    for (String s: strs) System.out.println(s);
-  }
-
-  /**
-   * Returns a list consisting of the elements of a collection that match the given predicate.
-   * @param c Collection<T>: The input collection
-   * @param p The predicate
-   * @param <T> Type of the element in the collection
-   * @return A list that match the given filter.
-   */
-  private <T> List<T> filter(Collection<T> c, Predicate<T> p) {
-    List<T> result = new ArrayList<>();
-    for(T i : c) {
-	if (p.filter(i))
-	    result.add(i);
-    }
-    return result;
-  }
-
-  /**
-   * Returns a list consisting of the results of applying the given function to the elements of the collection.
-   * @param c Collection<T>: The input collection
-   * @param m The predicate
-   * @param <T> Type of the element in the collection
-   * @param <U> Type of the element in the returned list
-   * @return A list that match the given mapper.
-   */
-  private <T, U> List<U> map(Collection<T> c, Mapper<T, U> m) {
-    List<U> result = new ArrayList<>();
-    for(T i: c) {
-	result.add(m.map(i));
-    }
-    return result;
+    ints.stream()
+	.filter(i -> i % 2==0)
+	.map(i -> i * 2)
+	.forEach(System.out::println);
+    
+    strs.stream()
+	.map(i -> i.toUpperCase())
+	.filter(i -> i.length() - i.replace("T", "").length() > 1)
+	.forEach(System.out::println);
   }
 }
